@@ -1,0 +1,9 @@
+[project]
+name = "neurips-scrape"
+version = "0.1.0"
+description = "Scrape accepted NeurIPS 2025 papers and author affiliations from OpenReview"
+requires-python = ">=3.13"
+dependencies = [
+    "openreview-py>=2.8.0",
+    "python-dotenv>=1.2.4",
+]
