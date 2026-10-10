@@ -10,8 +10,10 @@ import argparse
 import csv
 import json
 import os
+import re
 import sys
 import time
+import unicodedata
 from collections import Counter
 from itertools import zip_longest
 from pathlib import Path
@@ -283,8 +285,61 @@ def cmd_export(args):
     print(f"Wrote {rows} author rows to {args.csv}")
 
 
+def normalize_institution(name):
+    """Simple normalization so trivially different spellings count together."""
+    name = unicodedata.normalize("NFKD", name)
+    name = "".join(c for c in name if not unicodedata.combining(c)).lower()
+    name = name.replace("&", " and ")
+    name = re.sub(r"[^\w\s]", " ", name)
+    name = " ".join(name.split())
+    return name.removeprefix("the ")
+
+
+def cmd_top_affiliations(args):
+    counts = Counter()
+    spellings = {}  # normalized name -> Counter of original spellings
+    seen = set()
+    for r in read_jsonl(args.out):
+        for a in r.get("authors", []):
+            for aff in a.get("affiliations", []):
+                raw = (aff.get("institution") or "").strip()
+                key = normalize_institution(raw)
+                if not key:
+                    continue
+                if args.by == "authors":
+                    unit = (a.get("id") or a.get("name"), key)
+                else:
+                    unit = (r["id"], key)
+                if unit in seen:
+                    continue
+                seen.add(unit)
+                counts[key] += 1
+                spellings.setdefault(key, Counter())[raw] += 1
+    if not counts:
+        print("No affiliations found. Run 'scrape' first.")
+        return
+    print(f"Top {args.n} affiliations by number of {args.by} "
+          f"({len(counts)} distinct institutions):\n")
+    width = len(str(counts.most_common(1)[0][1]))
+    for rank, (key, n) in enumerate(counts.most_common(args.n), 1):
+        label = spellings[key].most_common(1)[0][0]
+        print(f"{rank:4d}. {n:{width}d}  {label}")
+
+
+EXAMPLES = """examples:
+  uv run scraper.py scrape --limit 5              quick test run
+  uv run scraper.py scrape                        full run (resumes automatically)
+  uv run scraper.py status                        counts by venue / author status
+  uv run scraper.py export --csv data/papers.csv  one CSV row per author
+  uv run scraper.py top-affiliations -n 30        30 most frequent institutions
+
+run 'uv run scraper.py <command> --help' for the options of a command."""
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Scrape accepted NeurIPS 2025 papers from OpenReview.")
+    parser = argparse.ArgumentParser(
+        description="Scrape accepted NeurIPS 2025 papers from OpenReview.",
+        epilog=EXAMPLES, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT,
                         help=f"papers JSONL file (default: {DEFAULT_OUT})")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -302,6 +357,13 @@ def main():
     p = sub.add_parser("export", help="export saved data to CSV (one row per author)")
     p.add_argument("--csv", type=Path, default=DATA_DIR / "papers.csv")
     p.set_defaults(func=cmd_export)
+
+    p = sub.add_parser("top-affiliations", help="list the N most frequent affiliations")
+    p.add_argument("-n", type=int, default=20, help="how many to list (default: 20)")
+    p.add_argument("--by", choices=["authors", "papers"], default="authors",
+                   help="count unique authors per institution, or papers with at least "
+                        "one author from it (default: authors)")
+    p.set_defaults(func=cmd_top_affiliations)
 
     args = parser.parse_args()
     try:

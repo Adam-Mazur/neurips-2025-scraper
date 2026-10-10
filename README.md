@@ -19,7 +19,13 @@ uv run scraper.py scrape --limit 5        # quick test
 uv run scraper.py scrape                  # full run; rerun to resume after a crash or Ctrl+C
 uv run scraper.py status                  # counts by venue and by author status
 uv run scraper.py export --csv data/papers.csv
+uv run scraper.py top-affiliations -n 30          # most frequent institutions (unique authors)
+uv run scraper.py top-affiliations --by papers    # ...or papers with >=1 author from there
+uv run scraper.py --help                          # all commands; <command> --help for options
 ```
+
+`top-affiliations` merges names that differ only in case, accents, punctuation,
+"&"/"and", or a leading "The". It shows the most common spelling for each group.
 
 The script saves each paper to `data/papers.jsonl` as soon as it is processed
 (one JSON object per line). Author profiles are cached in `data/profiles_cache.jsonl`.
