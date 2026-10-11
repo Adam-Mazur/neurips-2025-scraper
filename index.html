@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NeurIPS 2025 Affiliations</title>
-  <meta name="description" content="Explore the institutions behind the accepted NeurIPS 2025 papers, with filters by author position, byline order, track and country.">
+  <meta name="description" content="Explore the institutions behind the accepted NeurIPS 2025 papers, with filters by author position, byline order, track, continent and country.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a78d6'/><rect x='7' y='17' width='4' height='8' rx='1' fill='white'/><rect x='14' y='11' width='4' height='14' rx='1' fill='white'/><rect x='21' y='7' width='4' height='18' rx='1' fill='white'/></svg>">
   <link rel="stylesheet" href="web/style.css">
   <script>
@@ -73,8 +73,9 @@
           </div>
 
           <div class="field">
-            <label class="field-label" for="country">Country of affiliation</label>
-            <select id="country"><option value="">All countries</option></select>
+            <label class="field-label" for="continent">Location of affiliation</label>
+            <select id="continent" aria-label="Continent"><option value="">All continents</option></select>
+            <select id="country" aria-label="Country" class="stacked"><option value="">All countries</option></select>
           </div>
 
           <div class="field">

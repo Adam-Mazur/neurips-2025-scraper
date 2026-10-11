@@ -1,18 +1,19 @@
 // UI for the affiliation explorer. Data logic lives in core.js.
 import {
-  POSITION_GROUPS, aggregate, buildIndex, parseAliases, rowDetails, searchText,
+  CONTINENTS, POSITION_GROUPS, aggregate, continentOf, buildIndex, parseAliases, rowDetails, searchText,
 } from "./core.js";
 
 const PAGE = 100;
 const TRACKS = ["oral", "spotlight", "poster"];
 const DEFAULTS = {
-  by: "authors", mode: "alias", byline: "any", country: "", q: "", sort: "count-desc",
+  by: "authors", mode: "alias", byline: "any", continent: "", country: "", q: "", sort: "count-desc",
   tracks: [], groups: [], titles: [],
 };
 
 const $ = (id) => document.getElementById(id);
 const state = structuredClone(DEFAULTS);
 let index = null;
+let countries = []; // [code, name, authors], sorted by name
 let result = null; // last aggregate()
 let shown = PAGE;
 const expanded = new Set(); // keys of expanded rows
@@ -98,11 +99,16 @@ function setupControls() {
     for (const label of $("title-list").children) label.hidden = q && !label.dataset.search.includes(q);
   });
 
-  // Countries (by distinct authors)
-  const countries = [...countDistinct((s) => s.country)].filter(([c]) => c)
+  // Continents and countries (by distinct authors)
+  const continentAuthors = countDistinct((s) => s.continent);
+  $("continent").insertAdjacentHTML("beforeend", CONTINENTS.filter((c) => continentAuthors.has(c))
+    .map((c) => `<option value="${esc(c)}">${esc(c)} (${fmtInt.format(continentAuthors.get(c))})</option>`).join(""));
+  $("continent").addEventListener("change", (e) => {
+    state.continent = e.target.value;
+    update();
+  });
+  countries = [...countDistinct((s) => s.country)].filter(([c]) => c)
     .map(([c, n]) => [c, countryName(c), n]).sort((a, b) => a[1].localeCompare(b[1]));
-  $("country").insertAdjacentHTML("beforeend", countries.map(([c, name, n]) =>
-    `<option value="${esc(c)}">${esc(name)} (${fmtInt.format(n)})</option>`).join(""));
   $("country").addEventListener("change", (e) => { state.country = e.target.value; update(); });
 
   let searchTimer;
@@ -147,6 +153,14 @@ function countDistinct(keyFn) {
   return new Map([...sets].map(([k, v]) => [k, v.size]));
 }
 
+/** Country options, limited to the selected continent. */
+function fillCountries() {
+  const shown = countries.filter(([c]) => !state.continent || continentOf(c) === state.continent);
+  const all = state.continent ? `All of ${state.continent}` : "All countries";
+  $("country").innerHTML = `<option value="">${esc(all)}</option>` + shown.map(([c, name, n]) =>
+    `<option value="${esc(c)}">${esc(name)} (${fmtInt.format(n)})</option>`).join("");
+}
+
 function toggleIn(name, e) {
   const chip = e.target.closest(".chip");
   if (!chip) return;
@@ -168,6 +182,8 @@ function syncControls() {
   for (const c of $("group-chips").children) c.setAttribute("aria-pressed", String(state.groups.includes(c.dataset.value)));
   for (const input of $("title-list").querySelectorAll("input")) input.checked = state.titles.includes(input.value);
   $("titles-selected").textContent = state.titles.length ? `(${state.titles.length} selected)` : "";
+  $("continent").value = state.continent;
+  fillCountries();
   $("country").value = state.country;
   if ($("search").value !== state.q) $("search").value = state.q;
   $("sort").value = state.sort;
@@ -178,16 +194,19 @@ function syncControls() {
   $("count-head").textContent = { authors: "Authors", papers: "Papers", fractional: "Credit" }[state.by];
 
   const active = state.tracks.length + state.groups.length + state.titles.length +
-    (state.country ? 1 : 0) + (state.byline !== "any" ? 1 : 0);
+    (state.continent ? 1 : 0) + (state.country ? 1 : 0) + (state.byline !== "any" ? 1 : 0);
   $("active-count").textContent = active ? `${active} active` : "";
 }
 
 // ------------------------------------------------------------ compute & render
 
 function update(recount = true) {
+  // A country outside the chosen continent would match nothing; drop it.
+  if (state.continent && state.country && continentOf(state.country) !== state.continent) state.country = "";
   if (recount) {
     result = aggregate(index, {
-      mode: state.mode, by: state.by, byline: state.byline, country: state.country,
+      mode: state.mode, by: state.by, byline: state.byline,
+      continent: state.continent, country: state.country,
       tracks: new Set(state.tracks), groups: new Set(state.groups), titles: new Set(state.titles),
     });
     expanded.clear();

@@ -23,7 +23,8 @@ browser and ranks institutions. It lets you:
   **normalized** (case, accents, punctuation, etc.), or **merged** (normalized +
   alias file; matches `top-affiliations`);
 - filter by author position (PhD student, professor, ...; or exact job titles),
-  author order (first / last), track (oral / spotlight / poster) and country;
+  author order (first / last), track (oral / spotlight / poster), continent and
+  country (from the country code on each OpenReview affiliation);
 - search institutions by any of their aliases, sort by count or name, and open a
   row to see the merged names, position breakdown and the papers;
 - download the current table as CSV. The filters are kept in the URL, so links
