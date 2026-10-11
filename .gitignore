@@ -1,5 +1,6 @@
 .env
 .venv/
-data/
+data/*
+!data/papers.jsonl
 __pycache__/
 *.pyc
