@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NeurIPS 2025 Affiliations</title>
+  <meta name="description" content="Explore the institutions behind the accepted NeurIPS 2025 papers, with filters by author position, byline order, track and country.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a78d6'/><rect x='7' y='17' width='4' height='8' rx='1' fill='white'/><rect x='14' y='11' width='4' height='14' rx='1' fill='white'/><rect x='21' y='7' width='4' height='18' rx='1' fill='white'/></svg>">
+  <link rel="stylesheet" href="web/style.css">
+  <script>
+    try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script type="module" src="web/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div>
+        <h1>NeurIPS 2025 affiliations</h1>
+        <p class="lede">Which institutions the authors of accepted NeurIPS 2025 papers list on OpenReview.</p>
+      </div>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="stats" id="stats" aria-live="polite">
+      <div class="stat"><span class="stat-label">Papers</span><span class="stat-value" id="stat-papers">–</span></div>
+      <div class="stat"><span class="stat-label">Authors</span><span class="stat-value" id="stat-authors">–</span></div>
+      <div class="stat"><span class="stat-label">Institutions</span><span class="stat-value" id="stat-insts">–</span></div>
+      <div class="stat"><span class="stat-label">Top institution</span><span class="stat-value small" id="stat-top">–</span></div>
+    </section>
+
+    <div class="layout">
+      <aside class="filters" aria-label="Filters">
+        <details class="filters-box" id="filters-box" open>
+          <summary>Filters <span class="active-count" id="active-count"></span></summary>
+
+          <div class="field">
+            <span class="field-label" id="lbl-by">Count by</span>
+            <div class="segmented" role="radiogroup" aria-labelledby="lbl-by" data-name="by">
+              <button type="button" role="radio" data-value="authors" title="Unique authors with this affiliation">Authors</button>
+              <button type="button" role="radio" data-value="papers" title="Papers with at least one author from this institution">Papers</button>
+              <button type="button" role="radio" data-value="fractional" title="Each paper gives 1 credit, split equally among its authors and then among each author's institutions">Fractional</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field-label" id="lbl-mode">Equivalent names</span>
+            <div class="segmented" role="radiogroup" aria-labelledby="lbl-mode" data-name="mode">
+              <button type="button" role="radio" data-value="raw" title="Exactly as written on OpenReview; nothing is merged">As written</button>
+              <button type="button" role="radio" data-value="norm" title="Merge names that differ only in case, accents, punctuation, &amp;/and, a leading 'The' or a repeated part">Normalized</button>
+              <button type="button" role="radio" data-value="alias" title="Normalized, plus the hand-made alias list (affiliation_aliases.txt)">Merged</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field-label" id="lbl-byline">Author order</span>
+            <div class="segmented" role="radiogroup" aria-labelledby="lbl-byline" data-name="byline">
+              <button type="button" role="radio" data-value="any">Any</button>
+              <button type="button" role="radio" data-value="first">First</button>
+              <button type="button" role="radio" data-value="last">Last</button>
+              <button type="button" role="radio" data-value="firstlast" title="First or last author">First/last</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field-label">Track</span>
+            <div class="chips" id="track-chips"></div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="country">Country of affiliation</label>
+            <select id="country"><option value="">All countries</option></select>
+          </div>
+
+          <div class="field">
+            <span class="field-label">Author position <button type="button" class="link-btn" id="clear-groups">clear</button></span>
+            <div class="chips" id="group-chips"></div>
+            <details class="titles">
+              <summary>Exact job titles <span class="muted" id="titles-selected"></span></summary>
+              <input type="search" id="title-search" placeholder="Filter titles…" aria-label="Filter job titles">
+              <div class="title-list" id="title-list"></div>
+            </details>
+          </div>
+
+          <button type="button" class="btn ghost full" id="reset">Reset all filters</button>
+        </details>
+      </aside>
+
+      <section class="results" aria-label="Institutions">
+        <div class="toolbar">
+          <div class="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="search" id="search" placeholder="Search institutions or their aliases…" aria-label="Search institutions">
+          </div>
+          <select id="sort" aria-label="Sort order">
+            <option value="count-desc">Count: high → low</option>
+            <option value="count-asc">Count: low → high</option>
+            <option value="name-asc">Name: A → Z</option>
+            <option value="name-desc">Name: Z → A</option>
+          </select>
+          <button type="button" class="btn" id="download">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+            CSV
+          </button>
+        </div>
+        <p class="summary" id="summary"></p>
+
+        <div class="table-wrap">
+          <table class="inst-table">
+            <thead>
+              <tr>
+                <th class="c-rank" scope="col">#</th>
+                <th class="c-name" scope="col"><button type="button" class="sort-btn" data-sort="name">Institution</button></th>
+                <th class="c-count" scope="col"><button type="button" class="sort-btn" data-sort="count" id="count-head">Authors</button></th>
+                <th class="c-bar" scope="col"><span class="sr-only">Share bar</span></th>
+                <th class="c-share" scope="col" title="Share of all authors / papers that match the filters">Share</th>
+              </tr>
+            </thead>
+            <tbody id="rows">
+              <tr><td colspan="5" class="loading"><span class="spinner"></span> Loading papers…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <button type="button" class="btn ghost full" id="more" hidden>Show more</button>
+      </section>
+    </div>
+  </main>
+
+  <footer class="wrap site-footer">
+    Data scraped from <a href="https://openreview.net/group?id=NeurIPS.cc/2025/Conference">OpenReview</a>.
+    Affiliations are the positions authors list on their profiles in 2025, not necessarily those on the paper.
+    Equivalent names are merged with a hand-made <a href="affiliation_aliases.txt">alias list</a>.
+  </footer>
+</body>
+</html>
