@@ -1,7 +1,7 @@
 // UI for the affiliation explorer. Data logic lives in core.js.
 import {
   CONTINENTS, POSITION_GROUPS, aggregate, continentOf, buildIndex, parseAliases, rowDetails, searchText,
-} from "./core.js";
+} from "./core.js?v=2"; // bump ?v= here and in index.html when web/ changes, so browsers refetch
 
 const PAGE = 100;
 const TRACKS = ["oral", "spotlight", "poster"];
