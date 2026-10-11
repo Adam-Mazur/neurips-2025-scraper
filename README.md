@@ -25,7 +25,20 @@ uv run scraper.py --help                          # all commands; <command> --he
 ```
 
 `top-affiliations` merges names that differ only in case, accents, punctuation,
-"&"/"and", or a leading "The". It shows the most common spelling for each group.
+"&"/"and", a leading "The", or a repeated part ("Kyoto University, Kyoto University").
+It then applies `affiliation_aliases.txt`, a hand-made list of equivalent names
+(typos, abbreviations, renames, departments of a university, labs of a company):
+
+```
+Carnegie Mellon University
+    CMU, Carnegie Mellon University
+    School of Computer Science, Carnegie Mellon University
+```
+
+The first, unindented line is the name that gets printed. Edit the file to change
+how institutions are grouped; the header of the file explains the rules used so far.
+Use `--no-aliases` to count the raw names, or `--aliases FILE` to use another file.
+Names not in the file are shown in their most common spelling.
 
 The script saves each paper to `data/papers.jsonl` as soon as it is processed
 (one JSON object per line). Author profiles are cached in `data/profiles_cache.jsonl`.

@@ -31,6 +31,7 @@ MAX_ATTEMPTS = 6
 DATA_DIR = Path("data")
 DEFAULT_OUT = DATA_DIR / "papers.jsonl"
 DEFAULT_CACHE = DATA_DIR / "profiles_cache.jsonl"
+DEFAULT_ALIASES = Path("affiliation_aliases.txt")
 
 
 def log(msg):
@@ -285,8 +286,7 @@ def cmd_export(args):
     print(f"Wrote {rows} author rows to {args.csv}")
 
 
-def normalize_institution(name):
-    """Simple normalization so trivially different spellings count together."""
+def normalize_name_part(name):
     name = unicodedata.normalize("NFKD", name)
     name = "".join(c for c in name if not unicodedata.combining(c)).lower()
     name = name.replace("&", " and ")
@@ -295,7 +295,46 @@ def normalize_institution(name):
     return name.removeprefix("the ")
 
 
+def normalize_institution(name):
+    """Simple normalization so trivially different spellings count together.
+
+    Comma-separated parts that repeat are kept once, so "Harvard University, Harvard
+    University" (a common OpenReview artifact) is the same as "Harvard University".
+    """
+    parts = (normalize_name_part(p) for p in name.split(","))
+    return " ".join(dict.fromkeys(p for p in parts if p))
+
+
+def load_aliases(path):
+    """Read the alias file: a canonical name, followed by indented variant names.
+
+    Returns {normalized variant: canonical name}. Lines starting with # are comments.
+    """
+    aliases = {}
+    if not path.exists():
+        return aliases
+    canonical = None
+    for lineno, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        if not line[0].isspace():
+            canonical = line.strip()
+            names = [canonical]
+        elif canonical is None:
+            sys.exit(f"{path}:{lineno}: indented name before any canonical name")
+        else:
+            names = [line.strip()]
+        for name in names:
+            key = normalize_institution(name)
+            if aliases.get(key, canonical) != canonical:
+                sys.exit(f"{path}:{lineno}: '{name}' is already listed under "
+                         f"'{aliases[key]}'")
+            aliases[key] = canonical
+    return aliases
+
+
 def cmd_top_affiliations(args):
+    aliases = {} if args.no_aliases else load_aliases(args.aliases)
     counts = Counter()
     spellings = {}  # normalized name -> Counter of original spellings
     seen = set()
@@ -306,6 +345,9 @@ def cmd_top_affiliations(args):
                 key = normalize_institution(raw)
                 if not key:
                     continue
+                if key in aliases:
+                    raw = aliases[key]
+                    key = normalize_institution(raw)
                 if args.by == "authors":
                     unit = (a.get("id") or a.get("name"), key)
                 else:
@@ -363,6 +405,11 @@ def main():
     p.add_argument("--by", choices=["authors", "papers"], default="authors",
                    help="count unique authors per institution, or papers with at least "
                         "one author from it (default: authors)")
+    p.add_argument("--aliases", type=Path, default=DEFAULT_ALIASES,
+                   help="file of equivalent institution names "
+                        f"(default: {DEFAULT_ALIASES})")
+    p.add_argument("--no-aliases", action="store_true",
+                   help="count names as they are, without the alias file")
     p.set_defaults(func=cmd_top_affiliations)
 
     args = parser.parse_args()

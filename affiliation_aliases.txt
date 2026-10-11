@@ -1,0 +1,1830 @@
+# Equivalent institution names, used by `scraper.py top-affiliations`.
+#
+# Format: a canonical name at the start of a line, followed by indented variant
+# names that should be counted as it. The canonical name is what gets printed.
+# Matching ignores case, accents, punctuation, "&"/"and", a leading "The", and
+# repeated comma-separated parts ("Kyoto University, Kyoto University"), so each
+# variant only needs to be listed once in any of those spellings.
+#
+# Merge rules used here:
+#   - typos, abbreviations, translations and renames are merged
+#     (Beihang = Beijing University of Aeronautics and Astronautics, Facebook -> Meta)
+#   - departments, schools, institutes and hospitals of a university are merged
+#     into the university; a company's labs and divisions into the company
+#   - "X, <other institution>" entries, where OpenReview appended an unrelated
+#     institution (e.g. "Peking University, Tsinghua University"), go to X
+#   - separate organizations and campuses in another city stay separate:
+#     Google vs Google DeepMind, Alibaba vs Ant Group, ByteDance vs TikTok,
+#     CUHK vs CUHK-Shenzhen, HKUST vs HKUST (Guangzhou), HIT vs HIT Shenzhen,
+#     each Chinese Academy of Sciences institute vs CAS vs UCAS, each Max Planck
+#     institute, Mila vs Université de Montréal
+#   - generic names that fit many institutions ("Department of Computer Science",
+#     "Seed", "Max-Planck Institute") are left alone
+
+
+# ------------------------------------------------------------ companies
+
+Google
+    Google Research
+    Research, Google
+    SystemsResearch@Google
+    Google Brain
+    Google Zurich
+    Google Sydney
+    Google Cloud AI Research
+    Robotics at Google
+    Intrinsic at Google
+    Google & DeepMind
+
+Google DeepMind
+    DeepMind
+
+Meta
+    Facebook
+    Facebook AI
+    Facebook AI Research
+    Facebook AI Research (FAIR) Meta
+    Research, Facebook
+    Facebook / Meta
+    FAIR (Meta Platforms Inc.)
+    Meta AI
+    Meta Inc.
+    Meta Platforms
+    Meta Platforms, Inc.
+    Meta Platform
+    Meta FAIR
+    Meta FAIR Labs
+    FAIR
+    FAIR at Meta
+    FAIR, Meta
+    FAIR, Meta AI
+    FAIR Labs, Meta AI
+    FAIR lab
+    Meta AI (FAIR)
+    Meta AI Research
+    Meta AI, Fundamental AI Research
+    Meta Fundamental AI Research
+    Meta Fundamental AI Research (FAIR)
+    Meta Superintelligence Labs
+    Meta Superintelligence Lab
+    Meta GenAI
+    GenAI, Meta
+    Meta RL Research
+    Reality Labs (Research)
+    Meta, Reality Labs Research
+    Meta Reality Labs
+    Meta Reality Lab
+
+Microsoft
+    Microsoft Research
+    Research, Microsoft
+    Microsoft Research Asia
+    Microsoft Research Aisa
+    Microsoft Research Asia - Tokyo
+    Microsoft Research, Redmond
+    Microsoft Research New England
+    Microsoft Research Cambridge
+    MSR AI Frontiers Lab
+    MSR AI4Science China
+    Microsoft AI
+    Microsoft AI Asia
+    Microsoft AI Superintelligence
+    Microsoft GenAI
+    Microsoft Corporation
+    Microsoft Vancouver
+
+Amazon
+    Amazon Web Services
+    Amazon Web Service
+    AWS
+    AWS AI
+    AWS AI Labs
+    AWS AI Labs (Amazon)
+    Amazon AWS
+    Amazon AWS AI Lab
+    Amazon AGI
+    Amazon Alexa AI
+    Amazon FAR Lab
+    Amazon Development Center Germany
+
+NVIDIA
+    NVIDIA Research
+    NVIDIA Corporation
+    NVIDIA AI Technology Center
+
+Apple
+    Apple Inc.
+    Apple AI/ML
+    Apple AI Research
+
+IBM
+    International Business Machines
+    IBM, International Business Machines
+    IBM Research
+    IBM Research AI
+    IBM Research - Zurich
+    IBM T. J. Watson Research Center
+    IBM TJ Watson Research Center
+
+MIT-IBM Watson AI Lab
+    MIT-IBM Watson AI Lab, IBM Research
+    MIT-IBM Watson AI Research Lab
+    MIT-IBM Computing Researech Lab
+
+Alibaba Group
+    Alibaba
+    Alibaba Inc.
+    Alibaba Group US
+    Alibaba Cloud
+    Alibaba Cloud Computing
+    Alibaba International Digital Commerce Group
+    Qwen
+    Qwen Team, Alibaba Group
+    Tongyi Lab
+    Tongyi Lab, Alibaba Group
+    Alibaba Tongyi Lab
+    Alibaba Tongyi Wanx Team
+    DAMO Academy
+    DAMO Academy, Alibaba Group
+    Alibaba Group, DAMO Academy
+    Taobao & Tmall Group
+    Taobao & Tmall Group of Alibaba
+    Taobao (China) Software Co., Ltd.
+    Taotian, Alibaba Group
+    Live AIGC Group, Taobao
+
+Ant Group
+    Antgroup
+    Ant Research
+    Ling Team, Ant Group
+    Robbyant
+    Robbyant, Ant Group
+    InclusionAI
+
+ByteDance
+    ByteDance Inc.
+    ByteDance Seed
+    ByteDance Seed (Singapore)
+    Seed, ByteDance
+    Seed, ByteDance Inc.
+    Bytedance Research
+    Bytedance AI Lab
+    ByteDance Ads
+
+TikTok
+    TikTok Inc.
+
+Tencent
+    Tencent Inc.
+    Tencent America
+    Tencent America LLC
+    Tencent Singapore
+    Tencent AI Lab
+    tencent ailab
+    Tencent AI Lab Seattle
+    Tencent AI Lab Center of Visual Computing
+    Tencent AI Lab & Robotics X
+    Tencent Robotics X
+    Tencent Robotics X Lab
+    Tencent Youtu Lab
+    Tencent Youtu
+    Tencent Hunyuan
+    Tencent Hunyuan Team
+    Tencent Hunyuan LLM
+    Tencent Hunyuan3d
+    Tencent HY Frontier
+    HY Foundation Model Department, Tencent
+    Tencent WeChat
+    WeChat, Tencent
+    WeChat AI, Tencent
+    WeChat AI, Tencent Inc.
+    WeChat Vision, Tencent Inc.
+    Weixin AI, Tencent
+    Tencent Wexin Group
+    Tencent ARC Lab
+    ARC Lab, Tencent
+    Tencent PCG
+    Tencent PCG ARC Lab
+    Tencent PCG AI
+    Tencent AIPD
+    Tencent TEG
+    Tencent IEG
+    Tencent Turing Lab
+    Tencent Jarvis Lab
+    Tencent LightSpeed Studios
+    FiT,Tencent
+
+Huawei
+    Huawei Technologies Ltd.
+    Huawei Technologies Ltd.c
+    Huawei Technologies
+    Huawei Technologies Co., Ltd.
+    Huawei Technologies Canada
+    Huawei Technologies Canada Ltd.
+    Huawei Technologies France
+    Huawei Technologies R&D (UK) Ltd.
+    Huawei Technologies UK R&D Ltd
+    Huawei Technologies Research & Development (UK) Ltd
+    Huawei International.
+    Huawei Tech. Investment Co., Limited
+    Huawei Paris Research Center
+    Huawei 2012 Labs
+    Hong Kong Research Center, Huawei Technologies Ltd.
+    Huawei Noah's Ark Lab
+    Huawei Noah's Ark Lab (AI Lab)
+    Huawei Canada, Huawei Noah's Ark Lab
+    Noah's Ark Lab, Huawei Technologies Ltd.
+    Noah’s Ark Lab, Huawei
+
+Samsung
+    Samsung Electronics
+    Global Technology Research, Samsung Electronics
+    Samsung Research
+    Samsung Research America
+    Samsung Research UK
+    Samsung AI
+    Samsung AI Center Cambridge
+    Samsung AI Lab, Montreal
+    Samsung - SAIT AI Lab, Montreal
+    Samsung Advanced Institute of Technology
+    Samsung Advanced Institute of Technology (SAIT)
+    Samsung Semiconductor INC
+    Samsung R&D Institute China-Beijing
+    Beijing Samsung Telecom R&D Center
+
+Adobe
+    Adobe Systems
+    Adobe Research
+    Adobe Inc.
+
+Salesforce
+    SalesForce.com
+    Salesforce AI Research
+    Salesforce Research
+
+ServiceNow
+    ServiceNow Inc
+    ServiceNow Research
+    ServiceNow AI Research
+    Service Now Research
+
+Qualcomm
+    Qualcomm Inc
+    Qualcomm Inc, QualComm
+    Qualcomm Inc.
+    Qualcomm AI Research
+    Qualcomm Technologies, Inc.
+
+Intel
+    Intel Labs
+    Intel Labs China
+    Intel Deutschland GmbH
+
+AMD
+    Advanced Micro Devices
+
+Baidu
+    Baidu Inc.
+    Research, Baidu
+
+Kuaishou
+    Kuaishou- 快手科技
+    Kuaishou Technology
+    Kuaishou / KlingAI
+    Kling AI
+
+Meituan
+    Meituan Group
+    Longcat Team, Meituan
+    CLC, Meituan
+    Meituan M17
+
+JD.com
+    JD Explore Academy
+    JD Future Academy, JD.com
+
+Xiaomi
+    Xiaomi Corporation
+    Xiaomi MiMO
+    Xiaomi EV
+    MiLM-Plus Xiaomi Corporation
+
+Xiaohongshu
+    Xiaohongshu Inc.
+    RedNote
+
+SenseTime
+    SenseTime Research
+    SenseTime Group Ltd
+    SenseTime Group Limited
+
+StepFun
+    StepFun (Shanghai Jieyue Xingchen Intelligent Technology Co., Ltd)
+    Step Fun Inc
+    StepFun Technology Inc.
+
+Moonshot AI
+    Moonshot AI Ltd
+    Kimi Team, Moonshot AI
+
+Megvii
+    Megvii Technology Inc.
+    MEGVII Technology
+
+vivo
+    vivo Mobile Communication Co., Ltd
+    vivo AI Lab
+    Hangzhou VIVO Information Technology Co., Ltd
+    Vivo Blue Image
+
+OPPO
+    Guangdong OPPO Mobile Telecommunications Corp.,Ltd.
+    OPPO Guangdong Mobile Telecommunications Co., Ltd.
+    OPPO Research Institute
+    Oppo AI center
+    AndesVL Team, OPPO AI Center
+
+Lenovo
+    Lenovo Group Limited
+    lenovo group
+    Lenovo Research
+
+LG
+    LG Corporation
+    LG Electronics
+    LG AI Research
+    LG AI
+    Language Lab, LG AI Research
+
+NAVER
+    NAVER Cloud
+    NAVER AI Lab
+    NAVER Clova
+    Naver Labs
+    Naver Labs Europe
+
+Sony
+    Sony AI
+    Sony Group Corporation
+    Sony Europe Ltd.
+
+Fujitsu
+    Fujitsu Limited
+    Fujitsu Ltd.
+    Fujitsu Research, Fujitsu Limited
+    Fujitsu Research and Development Center Co. Ltm.
+    Fujitsu Research & Development Center Co., Ltd.
+    Fujitsu Research India Private Limited
+
+NEC
+    NEC Labs America
+    NEC-Labs
+    NEC Laboratories America
+
+Bosch
+    Robert Bosch GmbH, Bosch
+    Bosch Center for Artificial Intelligence
+    Bosch Center for AI
+
+Cohere
+    Cohere For AI
+    Cohere Labs
+
+J.P. Morgan
+    J.P. Morgan Chase
+    JPMorganChase
+    JPMorgan Chase
+    JPMorganChase, GTAR
+    J. P. Morgan Chase and Co.
+    JP Morgan & Chase Bank
+    JP Morgan AI Research
+    J.P. Morgan AI Research
+
+Capital One
+    CapitalOne
+
+Oracle
+    Oracle Health AI
+
+LinkedIn
+    LinkedIn Corporation
+    Microsoft's LinkedIn
+
+Genentech
+    Prescient Design, Genentech
+    Prescient Design - Genentech, Roche
+    Genentech / Roche
+
+China Telecom
+    TeleAI
+    TeleAI, China Telecom
+    Institute of Artificial Intelligence, China Telecom (TeleAI)
+
+China Unicom
+    chinaunicom group
+    China United Network Communications Group Co., Ltd.
+    China Unicom Network Communications Co., Ltd.
+    China Unicom Global Co.,Ltd
+    China Unicom Global Limited
+
+Databricks
+    Mosaic Research, Databricks
+
+Layer 6 AI
+    Layer6
+    Layer6 AI
+    Layer 6
+
+Mistral AI
+    Mistral
+
+Stability AI
+    Stability
+
+xAI
+    xAI Corp
+
+Wayve
+    Wayve AI
+
+Waymo
+    Waymo LLC
+
+Profluent
+    Profluent Bio
+    Profluent Bio, Inc.
+
+Goodfire
+    Goodfire AI
+
+Siemens
+    Siemens AG
+    Siemens Corporate Research
+    Siemens Technology
+
+KRAFTON
+    KRAFTON, Inc.
+    KRAFTON AI
+
+Pluralis Research
+    Pluralis.ai
+    pluralis
+
+GE HealthCare
+    GEHC
+
+CENTAI
+    CENTAI Institute
+    CENTAI S.p.A
+
+XPeng
+    XPeng Motors
+    XPeng Robotics
+
+Mitsubishi Electric Research Laboratories
+    Mitsubishi Electric Research Labs
+
+Zhipu AI
+    ZAI
+
+Bloomberg
+    Bloomberg AI
+
+DeepSeek
+    DeepSeek AI
+
+EleutherAI
+    Eleuther AI
+
+Together AI
+    TogetherAI
+
+Cisco
+    Cisco Systems
+
+Sea AI Lab
+    Sea AI Lab, Sea, Singapore
+
+Toyota Motor Corporation
+    Lattice Lab, Toyota Motor Corporation
+
+Physical Intelligence
+    Physical Intelliigence
+
+Twelve Labs
+    TwelveLabs
+
+FAR AI
+    FAR.AI
+
+
+# ------------------------------------------------------------ research institutes
+
+Shanghai Artificial Intelligence Laboratory
+    Shanghai AI Laboratory
+    Shanghai AI Lab
+    Shanghai Aritifcal Intelligence Laboratory
+    Shanghai Artificial Intelligence Laborator
+    Agent Center, Shanghai AI Laboratory
+
+Shanghai Innovation Institute
+    Shanghai Innovation Institution
+    Shanghai Innovation Institue
+
+Peng Cheng Laboratory
+    Pengcheng Laboratory
+    Peng Cheng Lab
+    Pengcheng Lab
+
+Beijing Academy of Artificial Intelligence
+    BAAI
+    Beijing Academy of Artificial Intelligence(BAAl)
+    Beijing Academy od Artifical Intelligence
+    baai-北京人工智能研究院
+
+Beijing Institute for General Artificial Intelligence
+    BIGAI
+    Beijing Institute for General Artificial Intelligence (BIGAI)
+    Beijing Institute of General Artificial Intelligence
+
+Zhongguancun Academy
+    Beijing Zhongguancun Academy
+
+Zhongguancun Laboratory
+    ZGC laboratory
+    ZGC Lab
+
+GuangMing Laboratory
+    Guangming Lab
+    GM Lab
+    Guangdong Laboratory of Artificial Intelligence and Digital Economy (SZ)
+    Guangdong Laboratory of Artificial Intelligence and Digital Economy (SZ), also known as Guangming Laboratory
+
+International Digital Economy Academy
+
+Allen Institute for AI
+    Allen Institute for Artificial Intelligence
+
+Mila - Quebec AI Institute
+    Mila
+    Mila - Quebec Artificial Intelligence Institute
+    Mila Research Institute
+    Montreal Institute of Learning Algorithms
+    ILLS & Mila - Quebec AI Institute
+
+Vector Institute
+    Vector Institute, Toronto
+
+Flatiron Institute
+    Flatiron Institute, Simons Foundation
+
+A*STAR
+    ASTAR
+    Agency for Science, Technology and Research
+    Agency for Science, Technology and Research (A*STAR)
+    Institute for Infocomm Research, A*STAR
+    Institute for Infocomm Research (I2R), A*STAR
+    Institute for Infocomm Research, Agency for Science, Technology and Research, Singapore
+    I2R, A*STAR
+    Institute of High Performance Computing, Singapore, A*STAR
+    Institute of Advanced Intelligence and Computing, A*STAR
+    A*STAR Institute of Advanced Intelligence and Computing
+    A*STAR Insitute of Advanced Intelligence and Computing (IAIC)
+    Centre for Frontier AI Research, A*STAR
+
+RIKEN
+    RIKEN AIP
+    RIKEN Center for Advanced Intelligence Project
+    RIKEN Center for Advanced Intelligence Project, RIKEN
+    Center for Advanced Intelligence Project, RIKEN
+    RIKEN Center for AI Project
+
+CSIRO
+    Commonwealth Scientific and Industrial Research Organisation
+    Commonwealth Scientific and Industrial Research Organisation, CSIRO
+    Data61
+    Data61, CSIRO
+    CSIRO's Data61
+
+Helmholtz Munich
+    Helmholtz Zentrum München
+    Helmholtz Zentrum Muenchen
+    Helmholtz München
+
+CISPA Helmholtz Center for Information Security
+    CISPA
+    CISPA Helmholtz Center
+
+German Research Center for Artificial Intelligence (DFKI)
+    German Research Center for AI
+
+Forschungszentrum Jülich
+    Forschungszentrum Juelich GmbH
+
+ELLIS Institute Tübingen
+    ELLIS Institute Tuebingen
+    ELLIS Institute Tübingen, Max Planck Institute for Intelligent Systems, Tübingen AI Center
+    ELLIS Institute Tübingen, Max Planck Institute for Intelligent Systems, Tübingen AI Center, Tübingen, Germany
+
+Max Planck Institute for Intelligent Systems
+    Max Planck Institute for Intelligent Systems, Max-Planck Institute
+    Max Planck Institute for Intelligent Systems, Tübingen
+
+Max Planck Institute for Informatics
+    Saarland Informatics Campus, Max-Planck Institute
+    Saarland Informatics Campus, Max-Planck Institute for Informatics
+    Max Planck Institute for Informatics, Saarland Informatics Campus
+
+Max Planck Institute for Software Systems
+    MPI-SWS
+    Max Planck Institute for Software Systems (MPI-SWS)
+
+INRIA
+    Inria, Paris
+    INRIA - Paris, Sierra-project team
+
+Institute of Automation, Chinese Academy of Sciences
+    Institute of automation, Chinese academy of science
+    Institute of automation, Chinese academy of science, Chinese Academy of Sciences
+    Institute of Automatio, Chinese Academy of Sciences
+    Institute of Automation of Chinese academy of science
+    Institute of Automation of，Chinese Academy of Sciences
+    Institute of Automation， CAS，China
+    Institute of automation, Chinese Academy of Sciences, University of Chinese Academy of Sciences
+    National Lab of Pattern Recognition, Institute of Automation,Chinese Academy of Sciences
+    National Laboratory of Multimodal Artificial Intelligence Systems, Institute of Automation, Chinese Academy of sciences
+
+Institute of Computing Technology, Chinese Academy of Sciences
+    Institute of Computing Technology, CAS
+    ICT, Chinese Academy of Sciences
+    Institute of Computing Technology
+    Institute of Computing Technology, Chinese Academy of Science
+    Institute of Computing Technology, Chinese Academy
+    Institute of Computing Technology, Chinese Academy of Sciences, China
+    The Institute of Computing Technology of the Chinese Academy of Sciences
+    Insitute of Computing Technology, Chinese Academy of Sciences
+    Insititute of Computing Technology, Chinese Academy of Sciences
+    Institution of Computing Technology, Chinese Academy of Sciences
+    Institute of Computing Technolgy, Chinese Academy of Sciences
+    Institute of Computig Technology, Chinese Academy of Sciences
+    Institute of Computing, Chinese Academy of Sciences
+    Key Laboratory of Intelligent Information Processing Institute of Computing Technology, Chinese Academy of Sciences
+    State Key Lab of Processors, Institute of Computing Technology, CAS
+
+Institute of Information Engineering, Chinese Academy of Sciences
+    Institute of Information Engineering, CAS
+    Institute of Information Enginering, Chinese Academy of Sciences
+
+Institute of Software, Chinese Academy of Sciences
+    Institute of Software, CAS
+    Institute of Software, Chinese Academy of Sciences, Beijing, China
+    Institute of Software Chinese Academy of Sciences, University of Chinese Academy of Sciences
+
+Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences
+    Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences
+    SIAT, Chinese Academy of Sciences
+
+Academy of Mathematics and Systems Science, Chinese Academy of Sciences
+
+Computer Network Information Center, Chinese Academy of Sciences
+    Computer Network Information Center (CNIC) of the Chinese Academy of Sciences (CAS)
+    Computer Network Information Center (CNIC), the Chinese Academy of Sciences (CAS)
+
+University of Chinese Academy of Sciences
+    University of the Chinese Academy of Sciences
+
+Academia Sinica
+    Institute of Information Science, Academia Sinica
+    IIS, Academia Sinica
+    Research Center for Information Technology Innovation, Academia Sinica
+
+Model Evaluation and Threat Research (METR)
+    METR
+    Model Evaluation and Threat Research
+
+ML Alignment & Theory Scholars (MATS)
+    ML Alignment & Theory Scholars
+    MATS
+    MATS Research
+    MATS Program
+
+Athena Research Center
+    Athena Research and Innovation Centre
+    Athena Research and Innovation Center
+    Athena Research Centre
+
+National Institute of Informatics
+    NII
+    NII, Tokyo Institute of Technology
+    NII, The Graduate University for Advanced Studies
+
+The Institute of Statistical Mathematics
+    The Institute of Statistical Mathematics, Japan
+    The Institute of Statistical Mathematics, Japan, Tokyo Institute of Technology
+    Institute of Statistical Mathematics, Tokyo
+
+Lawrence Livermore National Laboratory
+    Lawrence Livermore National Labs
+
+Brookhaven National Laboratory
+    Brookhaven National Lab
+
+Army Research Laboratory
+    Army Research Lab
+    DEVCOM Army Research Laboratory
+    US DEVCOM Army Research Laboratory
+    DEVCOM Aurmy Research Laboratory
+
+Electronics and Telecommunications Research Institute
+
+Korea Institute for Advanced Study
+    Korea Institute for Advanced Study (KIAS)
+
+National Institute of Advanced Industrial Science and Technology (AIST)
+    AIST, National Institute of Advanced Industrial Science and Technology
+
+Independent
+    Independent Researcher
+
+
+# ------------------------------------------------------------ universities: China
+
+Tsinghua University
+    Tsinghua University, China
+    Tsinghua University, Beijing
+    Tsinghua Univeresity
+    Tsinghua Univsersity
+    Department of Automation, Tsinghua University
+    Automation, Tsinghua University
+    Department of Electronic Engineering, Tsinghua University
+    Electronic Engineering, Tsinghua University
+    Department of EE, Tsinghua University
+    Department of Precision Instrument, Tsinghua University
+    Department of Computer Science and Technology, Tsinghua University
+    Department of Biomedical Engineering, Tsinghua University
+    The Department of Mathematics, Tsinghua University
+    Institute for Interdisciplinary Information Sciences, Tsinghua University
+    Institute for Interdisciplinary Information Sciences (IIIS), Tsinghua University
+    IIIS, Tsinghua University
+    AIR, Tsinghua University
+    Institute for AI Industry Research, Tsinghua University
+    Institute for AI Industry Research (AIR), Tsinghua University
+    Shenzhen International Graduate School, Tsinghua University
+    Shenzhen International Graudate School, Tsinghua University
+    Tsinghua Shenzhen International Graduate School
+    Tsinghua University Shenzhen International Graduate School
+    Graduate School at Shenzhen, Tsinghua University
+    SIGS, Tsinghua University
+
+Peking University
+    School of mathematical Science, Peking University
+    Academy for Advanced Interdisciplinary Studies, Peking University
+    School of Electronic and Computer Engineering, Peking University
+    Shenzhen Graduate School, Peking University
+    Peking University Shenzhen Graduate School
+    Peking University, Tsinghua University
+
+Shanghai Jiao Tong University
+    Shanghai Jiaotong University
+    John Hopcroft Center, Shanghai Jiao Tong University
+    Dept. of Computer Sci. & Eng., Shanghai Jiao Tong University
+
+Zhejiang University
+    College of Computer Science and Technology, Zhejiang University
+    Shanghai Institute for Advanced Study, Zhejiang University
+    The State Key Laboratory of Blockchain and Data Security, Zhejiang University
+
+University of Science and Technology of China
+    USTC
+    School of Computer Science and Technology, University of Science and Technology of China
+    University of Science and Technology of China, Tsinghua University
+
+University of Electronic Science and Technology of China
+    UESTC
+    University of Electronic Science and Technology of China, Tsinghua University
+    Institute of Intelligent Computing, University of Electronic Science and Technology of China
+    Shenzhen Institute of Advanced Study, UESTC
+
+Beihang University
+    Beijing University of Aeronautics and Astronautics
+    Beihang Univeristy
+    Behang University
+    Beihang University, Tsinghua University
+    School of Cyber Science and Technology, Beihang University
+    Institute of Artificial Intelligence, Beihang University
+    The Insititute of Advanced Computing Technology, Beijing University of Aeronautics and Astronautics
+    PBVR, Beijing University of Aeronautics and Astronautics
+
+Beijing University of Posts and Telecommunications
+    Beijing University of Post and Telecommunications
+    Beijing University of Post and Telecommunication
+    Beijing University of Posts and Telecommunications, P.R. China
+
+Xidian University
+    Xi'an University of Electronic Science and Technology
+
+Nanjing University
+    Nanjing University, China
+
+Nanjing University of Science and Technology
+    Nanjing University of Science and Techonolgy
+
+Wuhan University
+    武汉大学
+    Wuhan University, Tsinghua University
+
+Huazhong University of Science and Technology
+    Huazhong University of Sceince and Technology
+    Huazhong University of Science and Technology, Tsinghua University
+
+Sun Yat-sen University
+    SUN YAT-SEN UNIVERSITY, Tsinghua University
+    SUN YAT-SEN UNIVERSITY, China
+
+Harbin Institute of Technology
+    Harbin Institution of Technology
+    Harbin Institute Technology, Harbin Institute of Technology
+
+Harbin Institute of Technology, Shenzhen
+    Harbin Institute of Technology (Shenzhen), China
+    Harbin Institute of Technology, Shen Zhen
+
+Beijing Institute of Technology
+    School of Computer Science & Technology, Beijing Institute of Technology
+
+Beijing Jiaotong University
+    Beijing jiaotong univercity
+
+Tongji University
+    Tongji Unviersity
+
+Tianjin University
+    Tianjin Unibersity, China
+
+Southeast University
+    Southeast University, China
+
+Shandong University
+    Shandong Key Laboratory of Foundational Software
+
+Westlake University
+    Westlake University, China
+
+ShanghaiTech University
+    SIST ,ShanghaiTech University
+
+Jilin University
+    Jilin University, China
+
+Central South University
+    Central South University, China
+    Xiangya Hospital, Central South University
+
+Southern University of Science and Technology
+    South University of Science and Technology
+    Southern University for Science and Technology
+
+Northwestern Polytechnical University
+    Northwest Polytechnical University Xi'an
+    Northwest Polytechnical University
+    Northwestern Polytechinical University
+    Northwestern Polytechnical University, Northwest Polytechnical University Xi'an
+    Northwestern Polytechnical University, Tsinghua University
+
+Soochow University
+    Soochow University, China
+    Suzhou University
+
+Beijing Normal University
+    Beijing Normal University, Zhuhai Campus
+
+Beijing Normal-Hong Kong Baptist University
+    Beijing Normal University-Hong Kong Baptist University
+    BNBU
+    HKBU-Zhuhai
+
+Southwestern University of Finance and Economics
+    Southwest University of Finance and Economics
+
+Dalian Maritime University
+    Dalian Martime University
+
+Beijing Technology and Business University
+    Beijing Technology and Business Universi
+    School of Matematics asn Statistics, Beijing Technology and Business University
+
+University of Shanghai for Science and Technology
+    Shanghai University of Science and Technology
+
+Shenzhen University of Advanced Technology
+    Shenzhen Univ of Advanced Technology
+
+Jinan University
+    College of Information Science and Technology, Jinan University
+
+China University of Mining and Technology
+    China University of Mining Technology - Xuzhou
+
+Kunming University of Science and Technology
+    Kunmimg University of Science and Technology
+
+
+# ------------------------------------------------------------ universities: Hong Kong, Macau, Taiwan
+
+The Chinese University of Hong Kong
+    Department of Computer Science and Engineering, The Chinese University of Hong Kong
+    MMLab, The Chinese University of Hong Kong
+
+The Chinese University of Hong Kong, Shenzhen
+    The Chinese University of Hongkong, Shenzhen
+    The Chinese Univeristy of Hong Kong, Shenzhen
+    The Chinese University of Hong Kong,Shenhen
+    Chinese University of Hong Kong, Shen Zhen
+    CUHK(Shenzhen)
+    CUHK(SZ)
+    Shenzhen Institute of Artificial Intelligence and Robotics for Society (AIRS),The Chinese University of Hong Kong
+
+The Hong Kong University of Science and Technology
+    HKUST
+    CSE, HKUST
+    Department of Computer Science and Engineering, Hong Kong University of Science and Technology
+    Department of Computer Science and Engineering, The Hong Kong University of Science and Technology
+    IIP, The Hong Kong University of Science and Technology
+
+The Hong Kong University of Science and Technology (Guangzhou)
+    HKUST(GZ)
+    The Hong Kong University of Science and Technology (Guang Zhou)
+    The Hongkong University of Science and Technology (Guangzhou)
+    AI Thrust, Hong Kong University of Science and Technology (Guangzhou)
+
+The University of Hong Kong
+    The Univeristy of Hongkong
+    The University of HongKong
+    Department of Computer Science, The University of Hong Kong
+    Department of Electrical and Electronic Engineering, University of Hong Kong
+
+The Hong Kong Polytechnic University
+    Hong Kong Polytechnic University
+
+City University of Hong Kong
+
+Hong Kong Baptist University
+    HKBU
+
+National Taiwan University
+    Department of computer science and informational engineering, National Taiwan University
+
+National Tsing Hua University
+    National Tsinghua University
+    Department of Computer Science, National Tsing Hua University, National Tsinghua University
+
+
+# ------------------------------------------------------------ universities: Singapore, Korea, Japan, rest of Asia
+
+National University of Singapore
+    NUS
+    national university of singaore, National University of Singapore
+    Centre for Quantum Technologies, National University of Singapore
+    NUS School of Computing
+
+Nanyang Technological University
+    Nanyang Technological University, Singapore
+    College of Computing and Data Science, Nanyang Technological University
+    School of Computer Science and Engineering, Nanyang Technological University
+    Interdisciplinary Graduate Programme (AI-X) , Nanyang Technological University
+
+KAIST
+    Korea Advanced Institute of Science & Technology
+    KAIST Innocore LLM, Korea Advanced Institute of Science & Technology
+    KAIST, Graduate School of AI
+    KAIST, Korea Advanced Institute of Science & Technology
+
+Seoul National University
+
+POSTECH
+    Pohang University of Science and Technology
+
+Sungkyunkwan University
+    Sung Kyun Kwan University
+    Sungkyunkwan University (SKKU)
+
+Hanyang University
+    Hanyang Universty
+
+Kyung Hee University
+    Kyunghee University
+
+Ewha Womans University
+    Ewha Women's University
+
+Jeonbuk National University
+    Chonbuk National University
+
+The University of Tokyo
+    The University of Tokyo, Tokyo Institute of Technology
+    Graduate School of Information Science and Technology, The University of Tokyo
+
+Institute of Science Tokyo
+    Tokyo Institute of Technology
+    Institute of Science Tokyo (Tokyo Institute of Technology)
+
+The University of Osaka
+    Osaka University
+    Osaka University, Tokyo Institute of Technology
+    ISIR, The University of Osaka
+    ISIR, Osaka University, Japan
+    Graduate School of Medicine, Osaka University
+
+Kyushu University
+    Kyushu University,  Faculty of Information Science and Electrical Engineering
+
+Mohamed bin Zayed University of Artificial Intelligence
+    MBZUAI
+    Mohamed bin Zayed Univeristy of AI
+    Institute of Foundation Models, MBZUAI
+    Institute of Foundation Models, Mohamed bin Zayed University of Artificial Intelligence
+
+King Abdullah University of Science and Technology
+    KAUST
+    King Abdullah University of Science and Technology (KAUST)
+
+Indian Institute of Science
+    Indian institute of science, Bangalore
+    Indian Institute of Science, Bangalore (IISc)
+
+Indian Institute of Technology Bombay
+    Indian Institute of Technology, Bombay
+    Indian Institute of Technology Bombay, Indian Institute of Technology, Bombay
+    Indian Institute of Technology, Bombay, Dhirubhai Ambani Institute Of Information and Communication Technology
+
+Indian Institute of Technology Kanpur
+    Indian Institute of Technology, Kanpur
+    IIT Kanpur
+    IIT Kanpur, Indian Institute of Technology, Kanpur
+    Indian Institute of Technology Kanpur (IIT Kanpur)
+
+Indian Institute of Technology Kharagpur
+    IIT Kharagpur
+
+International Institute of Information Technology Hyderabad
+    International Institute of Information Technology, Hyderabad
+    International Institute of Information Technology, Hyderabad, International Institute of Information Technology Hyderabad
+    IIIT-H, India (International Institute of Information Technology - Hyderabad)
+
+Indian Statistical Institute
+    Indian Statistical Institute, Kolkata
+
+Technion - Israel Institute of Technology
+    Technion
+    Technion - Israel Institute of Technology, Technion
+    Computer Science Departmen, Technion-Israel Institute of Technology
+    Computer Science Department, Technion - Israel Institute of Technology
+    Electrical Engineering Department, Technion – Israel Institute of Technology
+
+Tel Aviv University
+    Tel Aviv University, Tel Aviv
+    School of Computer Science, Tel Aviv University
+
+Weizmann Institute of Science
+    Weizmann Institute, Technion
+
+Ben-Gurion University of the Negev
+    Ben Gurion University of the Negev
+    Ben-Gurion University
+    Ben Gurion University of the Negev, Technion
+
+Bar-Ilan University
+    Bar Ilan University, Technion
+
+Hanoi University of Science and Technology
+    School of Information and Communications Technology, Hanoi University of Science and Technology
+
+VinUniversity
+    VinUni
+
+
+# ------------------------------------------------------------ universities: USA and Canada
+
+Massachusetts Institute of Technology
+    MIT Lincoln Laboratory, Massachusetts Institute of Technology
+    Computer Science and Artificial Intelligence Laboratory, Electrical Engineering & Computer Science
+
+Stanford University
+    Computer Science Department, Stanford University
+    Stanford Law School
+
+Carnegie Mellon University
+    CMU, Carnegie Mellon University
+    School of Computer Science, Carnegie Mellon University
+    Robotics Institute, School of Computer Science, Carnegie Mellon University
+    Neuroscience Institute, Carnegie Mellon University
+    Software Engineering Institute, Carnegie Mellon University
+    Computer Science Department, School of Computer Science
+    Machine Learning Department, School of Computer Science
+
+University of California, Berkeley
+    UC Berkeley
+    UC Berkeley, University of California, Berkeley
+    University of California Berkeley, USA
+    Electrical Engineering & Computer Science Department, University of California, Berkeley
+
+University of Illinois Urbana-Champaign
+    University of Illinois at Urbana-Champaign
+    University of Illinois, Urbana Champaign
+    University of Illinois Urbana-Champaign (UIUC)
+    University of Illinois at Urbana-Champaign (UIUC)
+    University of Illinois Urbana-Champaign Champaign
+    UIUC
+    Department of Computer Science, University of Illinois at Urbana-Champaign
+    Department of Computer Science, University of Illinois Urbana-Champaign
+
+University of Illinois Chicago
+    University of Illinois at Chicago
+    University of Illinois, Chicago
+
+Harvard University
+    School of Engineering and Applied Sciences, Harvard University
+    Harvard Medical School
+    Harvard Medical School, Harvard University
+    Massachusetts General Hospital, Harvard University
+    Massachusetts General Hospital, Harvard Medical School
+    Brigham and Women's Hospital, Harvard University
+    Beth Israel Deaconess Medical Center, Harvard Universirt
+    Harvard T.H. Chan School of Public Health
+    Harvard AI and Robotics Lab
+    Kempner Institute
+
+Princeton University
+    Department of Computer Science, Princeton University
+
+University of California, Los Angeles
+    UCLA
+    UCLA, University of California, Los Angeles
+    UCLA Computer Science Department, University of California, Los Angeles
+    Computer Science Department, University of California, Los Angeles
+
+University of California, San Diego
+    UC San Diego, University of California, San Diego
+    Computer Science and Engineering Department, University of California, San Diego
+
+University of California, Santa Barbara
+    UC Santa Barbara
+
+University of California, Santa Cruz
+    University of California Santa Curz
+
+University of California, Irvine
+    Donald Bren School of Information and Computer Sciences, University of California, Irvine
+
+University of California, Riverside
+    University of California, Riverside, Department of Computer Science
+
+University of California, Merced
+    University of California at Merced
+
+University of Washington
+    University of Washington, Seattle
+    Department of Computer Science, University of Washington
+
+University of Texas at Austin
+    University of Texas, Austin
+
+University of Texas at Dallas
+    University of Texas, Dallas
+
+University of Texas at Arlington
+    University of Texas, Arlington
+
+University of Michigan
+    University of Michigan - Ann Arbor
+    University of Michigan Medical School
+
+University of Pennsylvania
+    The Wharton School, University of Pennsylvania
+    Wharton Statistics Department, The Wharton School
+    School of Engineering and Applied Science, University of Pennsylvania
+    Perelman School of Medicine, University of Pennsylvania
+    Department of Computer and Information Science, University of Pennsylvania
+
+Cornell University
+    Department of Computer Science, Cornell University
+    Weill Cornell Medicine, Cornell University
+
+Columbia University
+    Department of Computer Science, Columbia University
+
+Yale University
+    Department of Computer Science, Yale University
+
+Duke University
+    Department of Computer Science, Duke University
+
+Johns Hopkins University
+    Johns Hopkins Univ
+    Whiting School of Engineering, Johns Hopkins University
+    Department of Computer Science, Whiting School of Engineering
+    Mathematical Institute for Data Science (MINDS) at JHU
+
+New York University
+    NYU, New York University
+
+University of Southern California
+    USC/ISI
+    Information Sciences Institute, University of Southern California
+
+Georgia Institute of Technology
+
+University of Maryland, College Park
+    University of Maryland
+    Department of Computer Science, University of Maryland, College Park
+
+University of Wisconsin-Madison
+    University of Wisconsin - Madison
+    Department of Computer Science, University of Wisconsin - Madison
+    Department of Computer Sciences, University of Wisconsin - Madison
+
+University of North Carolina at Chapel Hill
+    University of North Carolina, Chapel Hill
+    Department of Computer Science, University of North Carolina at Chapel Hill
+    Department of Computer Science, University of North Carolina, Chapel Hill
+
+University of Massachusetts Amherst
+    University of Massachusetts at Amherst
+    Department of Computer Science, University of Massachusetts at Amherst
+    College of Information and Computer Sciences, University of Massachusetts
+    College of Information and Computer Science, University of Massachusetts, Amherst
+    College of Information and Computer Science, University of Massachusetts at Amherst
+
+University of Massachusetts Dartmouth
+    University of Massachusetts at Dartmouth
+
+University of Virginia
+    University of Virginia, Charlottesville
+    Department of Computer Science, University of Virginia, Charlottesville
+
+The Ohio State University
+    Ohio State University, Columbus
+
+University of Minnesota
+    University of Minnesota - Twin Cities
+    University of Minnesota, Minneapolis
+
+Texas A&M University
+    Texas A&M University - College Station
+    Texas A&M
+
+Rutgers University
+    Rutgers University, New Brunswick
+    DIMACS, Rutgers University
+    Rutgers University, Department of Computer Science
+
+Northeastern University
+    Northeastern University , Boston
+
+Pennsylvania State University
+    PSU
+
+Rice University
+    William Marsh Rice University
+
+California Institute of Technology
+    Deparment of Computing + Mathematical Sciences, California Institute of Technology
+
+Virginia Tech
+    Virginia Polytechnic Institute and State University
+
+Stony Brook University
+    State University of New York at Stony Brook
+    State University of New York, Stony Brook
+    Stony Brook University (State University of New York, Stony Brook)
+
+University at Buffalo
+    State University of New York at Buffalo
+    State University of New York, Buffalo
+
+Washington University in St. Louis
+    Washington University, Saint Louis
+    Washington University, St. Louis
+    Washington University in Saint Louis
+
+Indiana University
+    Indiana University at Bloomington
+    Indiana University Bloomington
+
+University of Colorado Boulder
+    University of Colorado at Boulder
+    University of Colorado, Boulder
+
+George Mason University
+    Computer Science, George Mason University
+
+Vanderbilt University
+    Vanderbilt University Medical Center
+
+University of Rochester
+    Department of Computer Science, University of Rochester
+
+Washington State University
+    Washington State University, Pullman
+
+University of New Hampshire
+    University of New Hampshire, Durham
+
+College of William & Mary
+    College of William and Mary
+    William & Mary
+
+Institute for Advanced Study
+    Institue for Advanced Study, Princeton
+    Institute for Advanced Study, Princeton
+
+University of Toronto
+    Toronto University
+    Univerity of Toronto
+    Department of Computer Science, University of Toronto
+    Department of Mechanical and Industrial Engineering, University of Toronto
+
+Université de Montréal
+    University of Montreal
+    Montreal Institute for Learning Algorithms, University of Montreal, Université de Montréal
+    Montreal Institute for Learning Algorithms, University of Montreal
+    Mila - Quebec AI Institute, Université de Montréal
+    Université de Montréal, Mila - Quebec AI Institute
+    Université de Montréal and Mila-Quebec AI Institute
+    Mila, Université de Montréal
+    Mila, UdeM
+
+Polytechnique Montréal
+    École Polytechnique de Montréal, Université de Montréal
+
+McGill University
+    Mila, McGill University
+    McGill/Mila
+
+HEC Montréal
+    HEC Montreal
+    Mila, HEC Montreal
+
+École de technologie supérieure
+    École de technologie supérieure, Université du Québec
+    ETS Montreal
+
+Concordia University
+    Concordia University, Montreal
+
+University of Waterloo
+    School of Computer Science, University of Waterloo
+
+University of British Columbia
+    Department of Electrical and Computer Engineering, The University of British Columbia
+
+Western University
+    University of Western Ontario
+
+Queen's University
+    Queens University
+
+Université Laval
+    Universite Laval
+    Laval university
+
+
+# ------------------------------------------------------------ universities: Europe
+
+University of Oxford
+    Oxford, University of Oxford
+    Oxofrd, University of Oxford
+    Department of Computer Science, University of Oxford
+    St Catherine's College, University of Oxford
+
+University of Cambridge
+
+University College London
+    University College London, University of London
+    Department of Computer Science, University College London, University of London
+
+Imperial College London
+
+King's College London
+    King's College London, University of London
+
+University of Edinburgh
+    Edinburgh University, University of Edinburgh
+    University of Edinburgh (UoE)
+    IPAB, University of Edinburgh
+
+London School of Economics
+    London School of Economics and Political Science, University of London
+
+Queen Mary University of London
+    Queen Mary, University of London
+    Queen Mary University London
+    Queen Mary University
+
+University of Birmingham
+    Birmingham University
+
+ETH Zurich
+    ETHZ - ETH Zurich
+    ETH
+    Swiss Federal Institute of Technology
+    Swiss Federal Institute of Technology Zurich
+    Department of Computer Science, ETHZ - ETH Zurich
+    Department of Computer Science, Swiss Federal Institute of Technology
+
+EPFL
+    EPFL - EPF Lausanne
+    Swiss Federal Institute of Technology Lausanne
+    EPFL Ecole Polytechnique Federale de Lausanne
+    School of Computer and Communication Sciences, EPFL - EPF Lausanne
+
+University of Zurich
+    Department of Informatics, University of Zurich
+
+University of Bern
+    Universität Bern
+    Institute für Informatik, University of Bern
+
+University of Lausanne
+    Université de Lausanne
+
+Technical University of Munich
+    Technische Universität München
+    Technical University Munich
+    Technical University Munich (TUM)
+    Department of Informatics, Technische Universität München
+    Technische Universität München, Chair of  Information-oriented Control
+
+LMU Munich
+    Ludwig-Maximilians-Universität München
+    LMU
+    Ludwig Maximilian University of Munich
+    University of Munich, Ludwig-Maximilians-Universität München
+    Institute of Computer Science, Ludwig-Maximilians-Universität München
+
+University of Tübingen
+    Eberhard-Karls-Universität Tübingen
+    University of Tuebingen
+    University Tübingen
+    Tübingen AI Center
+    Tübingen AI Center, University of Tübingen
+
+Karlsruhe Institute of Technology
+    Karlsruher Institut für Technologie
+    Karlsruhe Institut für Technologie
+    Karlsruhe Institute for Technology
+
+Technische Universität Berlin
+    TU Berlin
+
+Technische Universität Darmstadt
+    TU Darmstadt
+    Technical University of Darmstadt
+    CS Department, TU Darmstadt
+    CS Department, TU Darmstadt, Technische Universität Darmstadt
+    Computer Science Department, Technische Universität Darmstadt
+    Philosophy Institute, Department of History and Social Sciences, Technische Universität Darmstadt
+
+RWTH Aachen University
+    Rheinisch Westfälische Technische Hochschule Aachen
+    RWTH Aachen University, Rheinisch Westfälische Technische Hochschule Aachen
+
+Saarland University
+    Universität des Saarlandes
+    Saarland University, Universität des Saarlandes
+
+University of Freiburg
+    Albert-Ludwigs-Universität Freiburg
+    Universität Freiburg
+    University of Freiburg, Albert-Ludwigs-Universität Freiburg
+    CS Department, University of Freiburg, Germany, Albert-Ludwigs-Universität Freiburg
+
+Heidelberg University
+    Ruprecht-Karls-Universität Heidelberg
+    Heidelberg University, Ruprecht-Karls-Universität Heidelberg
+
+University of Göttingen
+    Georg-August Universität Göttingen
+    University Göttingen
+    University of Goettingen
+
+University of Bonn
+    Rheinische Friedrich-Wilhelms Universität Bonn
+
+Heinrich Heine University Düsseldorf
+    Heinrich-Heine Universität Düsseldorf
+
+University of Jena
+    Friedrich-Schiller Universität Jena
+    Friedrich-Schiller-University Jena
+
+University of Münster
+    Westfälische Wilhelms-Universität Münster
+    Universität Münster
+
+University of Stuttgart
+    Universität Stuttgart
+
+University of Kaiserslautern
+    Universität Kaiserslautern
+    TU Kaiserslautern
+    RPTU Kaiserslautern-Landau
+
+Leibniz University Hannover
+    Leibniz Universität Hannover
+    Universität Hannover
+
+University of Potsdam
+    Universität Potsdam
+
+University of Hamburg
+    Universität Hamburg
+
+Hamburg University of Technology
+    Technische Universität Hamburg
+
+University of Mannheim
+    Universität Mannheim
+
+University of Siegen
+    Universität Siegen
+
+Bielefeld University
+    Universität Bielefeld
+
+Ulm University
+    Universität Ulm
+
+University of Cologne
+    Universität Köln
+
+University of Technology Nuremberg
+    niversity of Technology Nuremberg
+
+Charité - Universitätsmedizin Berlin
+    Charité Universitaetsmedizin Berlin
+
+TU Wien
+    Technische Universität Wien
+    TU Wien Vienna University of Technology
+
+Graz University of Technology
+    Technische Universität Graz
+
+University of Vienna
+    Universität Vienna
+    University of Vienna, Vienna, Austria
+
+University of Salzburg
+    Universität Salzburg
+
+Johannes Kepler University Linz
+    Johannes Kepler Universität Linz
+
+Institute of Science and Technology Austria
+    Institute of Science and Technology
+    ISTA (Institute of Science and Technology Austria)
+    Institute of Science and Technology Austria(ISTA)
+
+University of Amsterdam
+
+Vrije Universiteit Amsterdam
+    VU Amsterdam
+
+Leiden University
+    Leiden University, Dept. of Mathematics
+
+Radboud University
+    Radboud University Nijmegen
+    Institute for Computing and Information Sciences, Radboud University Nijmegen, Radboud University
+
+KU Leuven
+    Department of Electrical Engineering, KU Leuven, Belgium
+
+Ghent University
+    Universiteit Gent
+    Universiteit Gent - imec
+
+University of Luxembourg
+    University of Luxemburg
+
+University of Copenhagen
+    Copenhagen University
+
+Aalborg University
+
+KTH Royal Institute of Technology
+    KTH Royal Institute of Technology, Stockholm, Sweden
+
+Chalmers University of Technology
+
+Norwegian University of Science and Technology
+    Norwegian Institute of Technology
+
+Sorbonne Université
+    Sorbonne Université - Faculté des Sciences (Paris VI)
+    Université Pierre et Marie Curie - Paris 6, Sorbonne Université - Faculté des Sciences (Paris VI)
+    Université Pierre et Marie Curie - Paris 6, Computer Science Lab  - Pierre and Marie Curie University, Paris, France
+    Sorbonne Université - Faculté de Médecine
+    Sorbonne Université, LPSM
+
+École Normale Supérieure
+    Ecole Normale Supérieure de Paris
+    Ecole Normale Supérieure, Paris
+    Ecole Normale Supérieure, Ecole Normale Supérieure de Paris
+    Ecole Normale Supérieure – PSL
+
+École Normale Supérieure Paris-Saclay
+    Ecole Normale Supérieure P-S
+
+École Polytechnique
+    Ecole Polytechique
+    Ecole Polytechnique, France
+    Ecole polytechnique, IP Paris
+
+Télécom Paris
+    Télécom ParisTech
+    Télécom Paris, Institut Polytechnique de Paris
+    Télécom ParisTech, Institut Polytechnique de paris
+
+ENSAE Paris
+    Ecole Nationale de la Statistique et de l'Administration Economique
+    Ensae ParisTech
+
+ENSTA Paris
+    Ecole Nationale Supérieure de Techniques Avancées
+
+École des Ponts ParisTech
+    Ecole Nationale des Ponts et Chausees
+    Ecole Nationale des Ponts et Chaussees
+    ENPC ParisTech
+    ENPC, Ecole Nationale des Ponts et Chausees
+    École des Ponts et Chaussées
+
+Université Paris Dauphine - PSL
+    Université Paris-Dauphine (Paris IX)
+    Université Paris Dauphine
+
+CentraleSupélec
+    CentraleSupelec
+    Centrale Supélec
+
+Université de Lorraine
+    University of Lorraine
+
+Université Grenoble Alpes
+    University Grenoble Alpes
+
+Université de Lille
+    University of Lille
+
+Université Toulouse Capitole
+    Université Toulouse 1 Capitole
+
+HEC Paris
+    Ecole des Hautes Etudes Commerciales
+
+INSA Lyon
+    Institut National des Sciences Appliquées de Lyon
+    INSA de Lyon
+
+Politecnico di Milano
+    Polytechnic Institute of Milan
+    Polytechnic University of Milan (POLIMI)
+
+Politecnico di Torino
+    Polytechnic Institute of Turin
+
+Sapienza University of Rome
+    University of Roma "La Sapienza"
+
+University of Rome Tor Vergata
+    University of Rome "Tor Vergata"
+    Università di Roma Tor Vergata
+
+University of Bologna
+    Università di Bologna
+    University di Bologna
+
+University of Pisa
+    Universita' di Pisa, University of Pisa
+
+University of Genoa
+    Università degli Studi di Genova
+
+University of Florence
+    Università degli Studi di Firenze
+
+University of Modena and Reggio Emilia
+    Università di modena e reggio emilia
+    Università degli Studi di Modena e Reggio Emilia
+    University of Modena and Reggio Emilia, AimageLab
+
+Istituto Italiano di Tecnologia
+    Università degli Studi di Genova, Istituto Italiano di Tecnologia
+
+SISSA
+    International Higher School for Advanced Studies Trieste
+    SISSA/ISAS
+
+Universitat Pompeu Fabra
+    Universitat Pompeu Fabra (UPF)
+    ICREA & Universitat Pompeu Fabra
+
+Universitat Autònoma de Barcelona
+    Computer Vision Center, Universitat Autónoma de Barcelona
+
+Universitat Politècnica de València
+    Universidad Politécnica de Valencia
+    Technical University of Valencia
+
+Universitat Politècnica de Catalunya
+    Universidad Politécnica de Cataluna
+
+Universidad Carlos III de Madrid
+    Carlos III University
+
+Universidad Rey Juan Carlos
+    King Juan Carlos University
+
+Czech Technical University in Prague
+    Czech Technical University of Prague
+    Czech Technical Univeresity in Prague, Czech Technical University of Prague
+    CIIRC, Czech Technical University in Prague
+
+Jagiellonian University
+    Jagiellonian University in Krakow
+    Jagiellonian University Cracow
+
+AGH University of Science and Technology
+    AGH University of Science and Technology, Krakow, Poland
+
+IDEAS NCBR
+    IDEAS NCBR Sp.
+    IDEAS NCBR Sp. z o.o.
+
+INSAIT
+    Institute for Computer Science, Artificial Intelligence and Technology
+
+HSE University
+    Higher School of Economics
+    National Research University Higher School of Economics
+
+Middle East Technical University
+    METU, Middle East Technical University
+
+Bilkent University
+
+Taras Shevchenko National University of Kyiv
+    National Taras Shevchenko University of Kiev
+
+
+# ------------------------------------------------------------ universities: Oceania, Latin America
+
+University of Sydney
+
+University of Adelaide
+    Adelaide University
+    University of Adelaide/Australian Institute of Machine Learning
+
+Australian Institute for Machine Learning
+    Australian Institute for Machine Learning (AIML)
+
+University of New South Wales
+    UNSW Sydney
+
+University of Technology Sydney
+    University of Technology Sydney (UTS)
+
+RMIT University
+    Royal Melbourne Institute of Technology
+
+University of South Australia
+    University of South Australia, Australia
+
+University of the Witwatersrand
+    University of Witwatersrand
+
+Pontificia Universidad Católica de Chile
+    Pontificia Universidad Catolica de Chile
+    Pontificia Universidad Católica
+
+IMPA
+    Instituto Nacional de Matemática Pura e Aplicada - IMPA
+
+Fundação Getúlio Vargas
+    Fundação Getúlio Vargas (FGV)
+    Getulio Vargas Foundation
+    FGV EMAp
+
+Federal University of Rio Grande do Sul
+    UFRGS
+    Institute of Informatics - Federal University of Rio Grande do Sul
+
+Federal University of Minas Gerais
+    Universidade Federal de Minas Gerais
+
+Centro Nacional de Inteligencia Artificial (CENIA)
+    Centro Nacional de Inteligencia Artificial
+    National Center for Artificial Intelligence
+    CENIA
