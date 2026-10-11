@@ -1,6 +1,6 @@
 """Scrape accepted NeurIPS 2025 papers, their authors and author affiliations from OpenReview.
 
-Usage:
+Usage (from the scraper/ directory):
     uv run scraper.py scrape            # run (or resume) the scrape
     uv run scraper.py status            # summary of what has been saved
     uv run scraper.py export --csv out.csv
@@ -28,10 +28,11 @@ AFFILIATION_YEAR = 2025  # history entries still active in this year count as "c
 MIN_INTERVAL = 0.4  # seconds between API calls (~150/min; the API allows 180/min)
 MAX_ATTEMPTS = 6
 
-DATA_DIR = Path("data")
+ROOT = Path(__file__).resolve().parent.parent  # repo root, shared with the website
+DATA_DIR = ROOT / "data"
 DEFAULT_OUT = DATA_DIR / "papers.jsonl"
 DEFAULT_CACHE = DATA_DIR / "profiles_cache.jsonl"
-DEFAULT_ALIASES = Path("affiliation_aliases.txt")
+DEFAULT_ALIASES = ROOT / "affiliation_aliases.txt"
 
 
 def log(msg):
@@ -368,11 +369,11 @@ def cmd_top_affiliations(args):
         print(f"{rank:4d}. {n:{width}d}  {label}")
 
 
-EXAMPLES = """examples:
+EXAMPLES = """examples (run from the scraper/ directory):
   uv run scraper.py scrape --limit 5              quick test run
   uv run scraper.py scrape                        full run (resumes automatically)
   uv run scraper.py status                        counts by venue / author status
-  uv run scraper.py export --csv data/papers.csv  one CSV row per author
+  uv run scraper.py export                        one CSV row per author (data/papers.csv)
   uv run scraper.py top-affiliations -n 30        30 most frequent institutions
 
 run 'uv run scraper.py <command> --help' for the options of a command."""
