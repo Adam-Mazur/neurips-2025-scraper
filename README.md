@@ -37,7 +37,7 @@ python -m http.server     # from the repo root, then open http://localhost:8000
 ```
 
 Publish on GitHub Pages: push the repo to GitHub, then in *Settings → Pages*
-choose *Deploy from a branch*, branch `master` (or `main`), folder `/ (root)`.
+choose *Deploy from a branch*, branch `main`, folder `/ (root)`.
 After a new scrape, commit `data/papers.jsonl` and the site updates on push.
 
 ## Scraper setup
